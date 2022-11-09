@@ -16,14 +16,10 @@ public class OptionsParser {
         for (String arg: args){
             index++;
             switch (arg) {
-                case "f" -> directions[index] = MoveDirection.FORWARD;
-                case "forward" -> directions[index] = MoveDirection.FORWARD;
-                case "b" -> directions[index] = MoveDirection.BACKWARD;
-                case "backward" -> directions[index] = MoveDirection.BACKWARD;
-                case "l" -> directions[index] = MoveDirection.LEFT;
-                case "left" -> directions[index] = MoveDirection.LEFT;
-                case "r" -> directions[index] = MoveDirection.RIGHT;
-                case "right" -> directions[index] = MoveDirection.RIGHT;
+                case "f", "forward" -> directions[index] = MoveDirection.FORWARD;
+                case "b", "backward" -> directions[index] = MoveDirection.BACKWARD;
+                case "l", "left" -> directions[index] = MoveDirection.LEFT;
+                case "r", "right" -> directions[index] = MoveDirection.RIGHT;
                 default -> index--;
             }
         }

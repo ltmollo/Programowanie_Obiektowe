@@ -4,6 +4,17 @@ public class Animal {
     private MapDirection orientation = MapDirection.NORTH;
     private Vector2d currentPosition = new Vector2d(2, 2);
 
+    public static IWorldMap map;
+
+    public Animal(IWorldMap map){
+        Animal.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        Animal.map = map;
+        currentPosition = initialPosition;
+    }
+
     public MapDirection getOrientation(){
         return orientation;
     }
@@ -13,8 +24,14 @@ public class Animal {
     }
 
     public String toString(){
-        String placement = "";
-        placement = orientation.toString() + " " + currentPosition.toString();
+        String placement;
+        switch (this.orientation){
+            case NORTH -> placement = "N";
+            case EAST -> placement = "E";
+            case SOUTH -> placement = "S";
+            case WEST -> placement = "W";
+            default -> placement = null;
+        }
         return placement;
     }
     public boolean isAt(Vector2d position){
@@ -32,43 +49,16 @@ public class Animal {
                 break;
             case FORWARD :
                 newPosition = currentPosition.add(orientation.toUnitVector());
-                if(newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))) {
+                if(map.canMoveTo(newPosition)) {
                     currentPosition = newPosition;
                 }
                 break;
             case BACKWARD :
                 newPosition = currentPosition.subtract(orientation.toUnitVector());
-                if(newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))) {
+                if(map.canMoveTo(newPosition)){
                     currentPosition = newPosition;
                 }
                 break;
         }
     }
-
-//    public void move(MoveDirection direction, Board board){
-//        Vector2d newPosition;
-//        switch (direction){
-//            case RIGHT :
-//                orientation = orientation.next();
-//                break;
-//            case LEFT :
-//                orientation = orientation.previous();
-//                break;
-//            case FORWARD :
-//                newPosition = currentPosition.add(orientation.toUnitVector());
-//                if(newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4)) && board.checkSpot(newPosition)) {
-//                    board.changeSpot(currentPosition, newPosition);
-//                    currentPosition = newPosition;
-//                }
-//                break;
-//
-//            case BACKWARD :
-//                newPosition = currentPosition.subtract(orientation.toUnitVector());
-//                if(newPosition.follows(new Vector2d(0, 0)) && newPosition.precedes(new Vector2d(4, 4))&& board.checkSpot(newPosition)) {
-//                    board.changeSpot(currentPosition, newPosition);
-//                    currentPosition = newPosition;
-//                }
-//                break;
-//        }
-//    }
 }

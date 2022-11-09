@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.testng.AssertJUnit.*;
 
 public class AnimalTest {
+    IWorldMap map = new RectangularMap(4, 4);
+    Vector2d position = new Vector2d(2, 2);
     @Test
     public void orientationTest(){
-        Animal zwierzak = new Animal();
+        Animal zwierzak = new Animal(map ,position);
         assertEquals(zwierzak.getOrientation(), MapDirection.NORTH);
         zwierzak.move(MoveDirection.RIGHT);
         assertEquals(zwierzak.getOrientation(), MapDirection.EAST);
@@ -30,7 +32,7 @@ public class AnimalTest {
 
     @Test
     public void positionTest(){
-        Animal zwierzak = new Animal();
+        Animal zwierzak = new Animal(map ,position);
         assertEquals(zwierzak.getCurrentPosition(), new Vector2d(2,2));
 
         zwierzak.move(MoveDirection.FORWARD);                           // North
@@ -63,20 +65,20 @@ public class AnimalTest {
 
     @Test
     public void checkBorders(){
-        Animal zwierzak1 = new Animal();
+        Animal zwierzak1 = new Animal(map ,position);
         zwierzak1.move(MoveDirection.FORWARD); //(2, 3)
         zwierzak1.move(MoveDirection.FORWARD); //(2, 4)
         zwierzak1.move(MoveDirection.FORWARD); //(2, 4)?
         assertTrue(zwierzak1.getCurrentPosition().x <= 4 && zwierzak1.getCurrentPosition().y <= 4);
 
-        Animal zwierzak2 = new Animal();
+        Animal zwierzak2 = new Animal(map ,position);
         zwierzak2.move(MoveDirection.RIGHT);
         zwierzak2.move(MoveDirection.FORWARD); //(3, 2)
         zwierzak2.move(MoveDirection.FORWARD); //(4, 2)
         zwierzak2.move(MoveDirection.FORWARD); //(4, 2)?
         assertTrue(zwierzak2.getCurrentPosition().x <= 4 && zwierzak2.getCurrentPosition().y <= 4);
 
-        Animal zwierzak3 = new Animal();
+        Animal zwierzak3 = new Animal(map ,position);
         zwierzak3.move(MoveDirection.RIGHT);
         zwierzak3.move(MoveDirection.RIGHT);
         zwierzak3.move(MoveDirection.FORWARD); //(2, 1)
@@ -84,7 +86,7 @@ public class AnimalTest {
         zwierzak3.move(MoveDirection.FORWARD); //(2, 0)?
         assertTrue(zwierzak3.getCurrentPosition().x <= 4 && zwierzak3.getCurrentPosition().y <= 4);
 
-        Animal zwierzak4 = new Animal();
+        Animal zwierzak4 = new Animal(map ,position);
         zwierzak3.move(MoveDirection.LEFT);
         zwierzak4.move(MoveDirection.FORWARD); //(1, 2)
         zwierzak4.move(MoveDirection.FORWARD); //(0, 2)
@@ -92,7 +94,7 @@ public class AnimalTest {
         assertTrue(zwierzak4.getCurrentPosition().x <= 4 && zwierzak4.getCurrentPosition().y <= 4);
 
 
-        Animal zwierzak5 = new Animal();
+        Animal zwierzak5 = new Animal(map ,position);
         zwierzak5.move(MoveDirection.LEFT);
         zwierzak5.move(MoveDirection.FORWARD); //(1, 2)
         zwierzak5.move(MoveDirection.FORWARD); //(0, 2)
@@ -104,7 +106,7 @@ public class AnimalTest {
         assertTrue(zwierzak4.getCurrentPosition().x <= 4 && zwierzak4.getCurrentPosition().y <= 4);
         assertEquals(zwierzak5.getCurrentPosition(), new Vector2d(0,0));
 
-        Animal zwierzak6 = new Animal();
+        Animal zwierzak6 = new Animal(map ,position);
         zwierzak6.move(MoveDirection.LEFT);
         zwierzak6.move(MoveDirection.FORWARD); //(1, 2)
         zwierzak6.move(MoveDirection.FORWARD); //(0, 2)
@@ -116,7 +118,7 @@ public class AnimalTest {
         assertTrue(zwierzak6.getCurrentPosition().x <= 4 && zwierzak6.getCurrentPosition().y <= 4);
         assertEquals(zwierzak6.getCurrentPosition(), new Vector2d(0,4));
 
-        Animal zwierzak7 = new Animal();
+        Animal zwierzak7 = new Animal(map ,position);
         zwierzak7.move(MoveDirection.RIGHT);
         zwierzak7.move(MoveDirection.FORWARD); //(3, 2)
         zwierzak7.move(MoveDirection.FORWARD); //(4, 2)
@@ -128,7 +130,7 @@ public class AnimalTest {
         assertTrue(zwierzak7.getCurrentPosition().x <= 4 && zwierzak7.getCurrentPosition().y <= 4);
         assertEquals(zwierzak7.getCurrentPosition(), new Vector2d(4,4));
 
-        Animal zwierzak8 = new Animal();
+        Animal zwierzak8 = new Animal(map ,position);
         zwierzak8.move(MoveDirection.RIGHT);
         zwierzak8.move(MoveDirection.FORWARD); //(3, 2)
         zwierzak8.move(MoveDirection.FORWARD); //(4, 2)

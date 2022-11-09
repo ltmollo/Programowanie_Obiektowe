@@ -16,17 +16,14 @@ public class World {
         } else {
             arguments = args;
         }
-//            Board board = new Board();
-            Animal zwierzak = new Animal();
 
-        MoveDirection[] directions = OptionsParser.parse(arguments);
-        System.out.println(zwierzak.toString());
-        for( MoveDirection arg : directions){
-            zwierzak.move(arg);
-//            zwierzak.move(arg, board);
-            System.out.println(zwierzak.toString());
-        }
-            System.out.println("System zakończył działanie");
-        }
-    }
+        MoveDirection[] directions = new OptionsParser().parse(arguments);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(2, 3)};
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
+        System.out.println(map.toString());
+        System.out.println("System zakończył działanie");
+       }
+}
 
