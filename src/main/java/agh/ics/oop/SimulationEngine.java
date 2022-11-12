@@ -1,17 +1,19 @@
 package agh.ics.oop;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class SimulationEngine implements IEngine {
 
-    private MoveDirection[] directions;
-    private IWorldMap map;
-    private Vector2d[] positions;
+    private final MoveDirection[] directions;
+    private final IWorldMap map;
+    private final Vector2d[] positions;
 
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions){
         this.directions = directions;
         this.map = map;
         this.positions = positions;
+
     }
 
     public void addAnimalOnMap(){
@@ -23,10 +25,12 @@ public class SimulationEngine implements IEngine {
 
     public void run() {
         addAnimalOnMap();
-        int nbOfAnimals = RectangularMap.animals.size();
+        RectangularMap currentMap = (RectangularMap)map;
+        int nbOfAnimals = currentMap.getAnimals().size();
         int indexOfAnimal = 0;
+        List<Animal> animals = currentMap.getAnimals();
         for(MoveDirection direction : directions){
-            Animal animal = RectangularMap.animals.get(indexOfAnimal);
+            Animal animal = animals.get(indexOfAnimal);
             animal.move(direction);
             indexOfAnimal++;
             indexOfAnimal = indexOfAnimal % nbOfAnimals;

@@ -1,6 +1,8 @@
 package agh.ics.oop;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.testng.AssertJUnit.*;
 
 public class IwordTest {
@@ -37,12 +39,17 @@ public class IwordTest {
     @Test
     public void ObjectAtTest(){
         engine.run();
+
+        RectangularMap currentMap = (RectangularMap)map;
+        List<Animal> animals = currentMap.getAnimals();
+
         assertEquals(map.objectAt(new Vector2d(2, 5)),null);
-        assertEquals(map.objectAt(new Vector2d(2, 2)), RectangularMap.animals.get(0));
+        assertEquals(map.objectAt(new Vector2d(2, 2)), animals.get(0));
     }
 
     @Test
     public void Movement(){
+        engine.run();
         String[] args2 = {"f", "f", "f"};
         MoveDirection[] directions2 = new OptionsParser().parse(args2);
         IWorldMap map2 = new RectangularMap(10, 5);
@@ -50,8 +57,11 @@ public class IwordTest {
         IEngine engine2 = new SimulationEngine(directions2, map2, positions2);
         engine2.run();
 
-        assertEquals(RectangularMap.animals.get(0).getCurrentPosition(), new Vector2d(2,3));
-        assertEquals(RectangularMap.animals.get(1).getCurrentPosition(), new Vector2d(2,4));
+        RectangularMap currentMap2 = (RectangularMap)map2;
+        List<Animal> animals = currentMap2.getAnimals();
+
+        assertEquals(animals.get(0).getCurrentPosition(), new Vector2d(2,3));
+        assertEquals(animals.get(1).getCurrentPosition(), new Vector2d(2,4));
 
         String[] args3 = {"f", "f", "f", "f"};
         MoveDirection[] directions3 = new OptionsParser().parse(args3);
@@ -60,8 +70,11 @@ public class IwordTest {
         IEngine engine3 = new SimulationEngine(directions3, map3, positions3);
         engine3.run();
 
-        assertEquals(RectangularMap.animals.get(0).getCurrentPosition(), new Vector2d(2,3));
-        assertEquals(RectangularMap.animals.get(1).getCurrentPosition(), new Vector2d(2,5));
+        RectangularMap currentMap3 = (RectangularMap)map3;
+        animals = currentMap3.getAnimals();
+
+        assertEquals(animals.get(0).getCurrentPosition(), new Vector2d(2,3));
+        assertEquals(animals.get(1).getCurrentPosition(), new Vector2d(2,5));
 
         String[] args4 = {"f", "f", "f", "f", "r", "l", "f", "b"};
         MoveDirection[] directions4 = new OptionsParser().parse(args4);
@@ -70,10 +83,13 @@ public class IwordTest {
         IEngine engine4 = new SimulationEngine(directions4, map4, positions4);
         engine4.run();
 
-        assertEquals(RectangularMap.animals.get(0).getCurrentPosition(), new Vector2d(3,3));
-        assertEquals(RectangularMap.animals.get(1).getCurrentPosition(), new Vector2d(3,5));
-        assertEquals(RectangularMap.animals.get(0).getOrientation(), MapDirection.EAST);
-        assertEquals(RectangularMap.animals.get(1).getOrientation(), MapDirection.WEST);
+        RectangularMap currentMap4 = (RectangularMap)map4;
+        animals = currentMap4.getAnimals();
+
+        assertEquals(animals.get(0).getCurrentPosition(), new Vector2d(3,3));
+        assertEquals(animals.get(1).getCurrentPosition(), new Vector2d(3,5));
+        assertEquals(animals.get(0).getOrientation(), MapDirection.EAST);
+        assertEquals(animals.get(1).getOrientation(), MapDirection.WEST);
 
     }
 
