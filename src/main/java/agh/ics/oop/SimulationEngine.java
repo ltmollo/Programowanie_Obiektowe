@@ -9,6 +9,8 @@ public class SimulationEngine implements IEngine {
     private final IWorldMap map;
     private final Vector2d[] positions;
 
+    private final List<Animal> animals = new ArrayList<>();
+
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions){
         this.directions = directions;
         this.map = map;
@@ -19,18 +21,18 @@ public class SimulationEngine implements IEngine {
     public void addAnimalOnMap(){
         for(Vector2d elem : positions){
             Animal animal = new Animal(this.map, elem);
-            map.place(animal);
+            if(map.place(animal)){
+                this.animals.add(animal);
+            };
         }
     }
 
     public void run() {
         addAnimalOnMap();
-        RectangularMap currentMap = (RectangularMap)map;
-        int nbOfAnimals = currentMap.getAnimals().size();
+        int nbOfAnimals = this.animals.size();
         int indexOfAnimal = 0;
-        List<Animal> animals = currentMap.getAnimals();
         for(MoveDirection direction : directions){
-            Animal animal = animals.get(indexOfAnimal);
+            Animal animal = this.animals.get(indexOfAnimal);
             animal.move(direction);
             indexOfAnimal++;
             indexOfAnimal = indexOfAnimal % nbOfAnimals;

@@ -1,26 +1,25 @@
 package agh.ics.oop;
 
-public class Animal {
+public class Animal extends AbstractWorldMapElement{
     private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d currentPosition = new Vector2d(2, 2);
 
     private final IWorldMap map;
 
     public Animal(IWorldMap map){
+        super(new Vector2d(2, 2));
         this.map = map;
     }
-
     public Animal(IWorldMap map, Vector2d initialPosition){
+        super(initialPosition);
         this.map = map;
-        currentPosition = initialPosition;
     }
 
     public MapDirection getOrientation(){
         return orientation;
     }
 
-    public Vector2d getCurrentPosition(){
-        return currentPosition;
+    public Vector2d getPosition(){
+        return position;
     }
 
     public String toString(){
@@ -35,7 +34,7 @@ public class Animal {
         return placement;
     }
     public boolean isAt(Vector2d position){
-        return currentPosition.equals(position);
+        return this.position.equals(position);
     }
 
     public void move(MoveDirection direction){
@@ -48,15 +47,15 @@ public class Animal {
                 orientation = orientation.previous();
                 break;
             case FORWARD :
-                newPosition = currentPosition.add(orientation.toUnitVector());
+                newPosition = position.add(orientation.toUnitVector());
                 if(map.canMoveTo(newPosition)) {
-                    currentPosition = newPosition;
+                    position = newPosition;
                 }
                 break;
             case BACKWARD :
-                newPosition = currentPosition.subtract(orientation.toUnitVector());
+                newPosition = position.subtract(orientation.toUnitVector());
                 if(map.canMoveTo(newPosition)){
-                    currentPosition = newPosition;
+                    position = newPosition;
                 }
                 break;
         }

@@ -1,8 +1,9 @@
 package agh.ics.oop;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
+
+import static org.testng.AssertJUnit.assertEquals;
 
 public class World {
     public static void main(String[] args) {
@@ -17,13 +18,15 @@ public class World {
             arguments = args;
         }
 
-        MoveDirection[] directions = new OptionsParser().parse(arguments);
-        IWorldMap map = new RectangularMap(10, 5);
-        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(2, 3)};
-        IEngine engine = new SimulationEngine(directions, map, positions);
-        Animal animal = new Animal(map);
-        engine.run();
-        System.out.println(map.toString());
+
+        MoveDirection[] directions2 = new OptionsParser().parse(arguments);
+        IWorldMap map2 = new GrassField(5);
+        Vector2d[] positions2 = { new Vector2d(-2,2), new Vector2d(3,-2)};
+        IEngine engine2 = new SimulationEngine(directions2, map2, positions2);
+        engine2.run();
+
+
+        System.out.println(map2.toString());
         System.out.println("System zakończył działanie");
        }
 }
