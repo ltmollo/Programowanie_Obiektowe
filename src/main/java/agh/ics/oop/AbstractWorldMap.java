@@ -5,7 +5,6 @@ import java.util.List;
 
 abstract class AbstractWorldMap implements IWorldMap {
     protected List<Animal> animals = new ArrayList<>();
-
     protected final Vector2d beginVector;
     protected final Vector2d endVector;
     private MapVisualizer toDraw = new MapVisualizer(this);
@@ -16,8 +15,12 @@ abstract class AbstractWorldMap implements IWorldMap {
         this.endVector = new Vector2d(maxWidth, maxHeight);
     }
 
-    public List<Animal> getAnimals(){
-        return this.animals;
+    public List<Vector2d> getAnimalsPositions(){
+        List<Vector2d> positions = new ArrayList<>();
+        for( Animal animal : this.animals){
+            positions.add(new Vector2d(animal.getPosition().x, animal.getPosition().y));
+        }
+        return positions;
     }
     public boolean canMoveTo(Vector2d position) {
         if (position.follows(this.beginVector) && position.precedes(this.endVector)) {

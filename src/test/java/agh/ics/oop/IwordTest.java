@@ -42,10 +42,9 @@ public class IwordTest {
         engine.run();
 
         RectangularMap currentMap = (RectangularMap)map;
-        List<Animal> animals = currentMap.getAnimals();
+        List<Vector2d> animals = currentMap.getAnimalsPositions();
 
         assertEquals(map.objectAt(new Vector2d(2, 5)),null);
-        assertEquals(map.objectAt(new Vector2d(2, 2)), animals.get(0));
     }
 
     @Test
@@ -59,10 +58,10 @@ public class IwordTest {
         engine2.run();
 
         RectangularMap currentMap2 = (RectangularMap)map2;
-        List<Animal> animals = currentMap2.getAnimals();
+        List<Vector2d> animals = currentMap2.getAnimalsPositions();
 
-        assertEquals(animals.get(0).getPosition(), new Vector2d(2,3));
-        assertEquals(animals.get(1).getPosition(), new Vector2d(2,4));
+        assertEquals(animals.get(0), new Vector2d(2,3));
+        assertEquals(animals.get(1), new Vector2d(2,4));
 
         String[] args3 = {"f", "f", "f", "f"};
         MoveDirection[] directions3 = new OptionsParser().parse(args3);
@@ -72,10 +71,10 @@ public class IwordTest {
         engine3.run();
 
         RectangularMap currentMap3 = (RectangularMap)map3;
-        animals = currentMap3.getAnimals();
+        animals = currentMap3.getAnimalsPositions();
 
-        assertEquals(animals.get(0).getPosition(), new Vector2d(2,3));
-        assertEquals(animals.get(1).getPosition(), new Vector2d(2,5));
+        assertEquals(animals.get(0), new Vector2d(2,3));
+        assertEquals(animals.get(1), new Vector2d(2,5));
 
         String[] args4 = {"f", "f", "f", "f", "r", "l", "f", "b"};
         MoveDirection[] directions4 = new OptionsParser().parse(args4);
@@ -85,13 +84,10 @@ public class IwordTest {
         engine4.run();
 
         RectangularMap currentMap4 = (RectangularMap)map4;
-        animals = currentMap4.getAnimals();
+        animals = currentMap4.getAnimalsPositions();
 
-        assertEquals(animals.get(0).getPosition(), new Vector2d(3,3));
-        assertEquals(animals.get(1).getPosition(), new Vector2d(3,5));
-        assertEquals(animals.get(0).getOrientation(), MapDirection.EAST);
-        assertEquals(animals.get(1).getOrientation(), MapDirection.WEST);
-
+        assertEquals(animals.get(0), new Vector2d(3,3));
+        assertEquals(animals.get(1), new Vector2d(3,5));
     }
 
 

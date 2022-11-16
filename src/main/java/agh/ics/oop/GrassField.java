@@ -13,8 +13,12 @@ class GrassField extends AbstractWorldMap {
         putTuft();
     }
 
-    public List<Grass> getGrassFieldTufts(){
-        return this.tufts;
+    public List<Vector2d> getGrassFieldTuftsPositions(){
+        List<Vector2d> positions = new ArrayList<>();
+        for( Grass grass : this.tufts){
+            positions.add(new Vector2d(grass.getPosition().x, grass.getPosition().y));
+        }
+        return positions;
     }
 
     private void putTuft(){
