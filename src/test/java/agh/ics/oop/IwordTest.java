@@ -2,6 +2,7 @@ package agh.ics.oop;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.AssertJUnit.*;
 
@@ -41,9 +42,6 @@ public class IwordTest {
     public void ObjectAtTest(){
         engine.run();
 
-        RectangularMap currentMap = (RectangularMap)map;
-        List<Vector2d> animals = currentMap.getAnimalsPositions();
-
         assertEquals(map.objectAt(new Vector2d(2, 5)),null);
     }
 
@@ -60,8 +58,8 @@ public class IwordTest {
         RectangularMap currentMap2 = (RectangularMap)map2;
         List<Vector2d> animals = currentMap2.getAnimalsPositions();
 
-        assertEquals(animals.get(0), new Vector2d(2,3));
-        assertEquals(animals.get(1), new Vector2d(2,4));
+        assertTrue(animals.contains(new Vector2d(2,3)));
+        assertTrue(animals.contains(new Vector2d(2,4)));
 
         String[] args3 = {"f", "f", "f", "f"};
         MoveDirection[] directions3 = new OptionsParser().parse(args3);
@@ -73,8 +71,8 @@ public class IwordTest {
         RectangularMap currentMap3 = (RectangularMap)map3;
         animals = currentMap3.getAnimalsPositions();
 
-        assertEquals(animals.get(0), new Vector2d(2,3));
-        assertEquals(animals.get(1), new Vector2d(2,5));
+        assertTrue(animals.contains(new Vector2d(2,3)));
+        assertTrue(animals.contains(new Vector2d(2,5)));
 
         String[] args4 = {"f", "f", "f", "f", "r", "l", "f", "b"};
         MoveDirection[] directions4 = new OptionsParser().parse(args4);
@@ -86,8 +84,8 @@ public class IwordTest {
         RectangularMap currentMap4 = (RectangularMap)map4;
         animals = currentMap4.getAnimalsPositions();
 
-        assertEquals(animals.get(0), new Vector2d(3,3));
-        assertEquals(animals.get(1), new Vector2d(3,5));
+        assertTrue(animals.contains(new Vector2d(3,3)));
+        assertTrue(animals.contains(new Vector2d(3,5)));
     }
 
 

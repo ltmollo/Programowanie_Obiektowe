@@ -2,7 +2,7 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-class RectangularMap extends AbstractWorldMap {
+class RectangularMap extends AbstractWorldMap{
 
     protected final int width;
     protected final int height;
@@ -20,4 +20,6 @@ class RectangularMap extends AbstractWorldMap {
     protected  Vector2d checkEnding(){
         return new Vector2d(width, height);
     }
+
+
 }

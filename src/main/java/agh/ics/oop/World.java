@@ -21,12 +21,13 @@ public class World {
 
         MoveDirection[] directions2 = new OptionsParser().parse(arguments);
         IWorldMap map2 = new GrassField(5);
-        Vector2d[] positions2 = { new Vector2d(-2,2), new Vector2d(3,-2)};
+        Vector2d[] positions2 = { new Vector2d(2,2), new Vector2d(2, 3)};
         IEngine engine2 = new SimulationEngine(directions2, map2, positions2);
         engine2.run();
 
 
         System.out.println(map2.toString());
+        System.out.println();
         System.out.println("System zakończył działanie");
        }
 }

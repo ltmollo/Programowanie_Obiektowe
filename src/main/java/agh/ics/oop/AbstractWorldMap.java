@@ -1,10 +1,9 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-abstract class AbstractWorldMap implements IWorldMap {
-    protected List<Animal> animals = new ArrayList<>();
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+    Map<Vector2d, Animal> animals = new HashMap<>();
     protected final Vector2d beginVector;
     protected final Vector2d endVector;
     private MapVisualizer toDraw = new MapVisualizer(this);
@@ -17,17 +16,14 @@ abstract class AbstractWorldMap implements IWorldMap {
 
     public List<Vector2d> getAnimalsPositions(){
         List<Vector2d> positions = new ArrayList<>();
-        for( Animal animal : this.animals){
-            positions.add(new Vector2d(animal.getPosition().x, animal.getPosition().y));
+        for (Vector2d vector : this.animals.keySet()){
+            positions.add(new Vector2d(vector.x, vector.y));
         }
         return positions;
     }
     public boolean canMoveTo(Vector2d position) {
         if (position.follows(this.beginVector) && position.precedes(this.endVector)) {
-            for (Animal elem : animals) {
-                if (elem.getPosition().equals(position)) {return false;}
-            }
-            return true;
+            return !animals.containsKey(position);
         }
         return false;
     }
@@ -37,21 +33,27 @@ abstract class AbstractWorldMap implements IWorldMap {
     }
 
     public Object objectAt(Vector2d position) {
-        for (Animal elem : this.animals) {
-            if (elem.getPosition().equals(position)) {return elem;}
-        }
-        return null;
+        return animals.get(position);
     }
 
     public boolean place(Animal animal) {
         if(!canMoveTo(animal.getPosition())) {return false;}
-        this.animals.add(animal);
+        this.animals.put(animal.getPosition(), animal);
+        animal.addObserver(this);
         return true;
     }
 
     protected abstract  Vector2d checkBeginning();
 
     protected abstract Vector2d checkEnding();
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        Animal animal = this.animals.get(oldPosition);
+        this.animals.remove(oldPosition);
+        this.animals.put(newPosition, animal);
+
+    }
 
     public String toString(){
         return toDraw.draw(checkBeginning(), checkEnding());

@@ -1,11 +1,10 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class GrassField extends AbstractWorldMap {
     private final int nbOfTuft;
-    private final List<Grass> tufts = new ArrayList<>();
+    private Map<Vector2d, Grass> tufts = new HashMap<>();
 
     public GrassField(int tuft){
         super(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE);
@@ -15,8 +14,8 @@ class GrassField extends AbstractWorldMap {
 
     public List<Vector2d> getGrassFieldTuftsPositions(){
         List<Vector2d> positions = new ArrayList<>();
-        for( Grass grass : this.tufts){
-            positions.add(new Vector2d(grass.getPosition().x, grass.getPosition().y));
+        for(Vector2d vector : this.tufts.keySet()) {
+            positions.add(new Vector2d(vector.x, vector.y));
         }
         return positions;
     }
@@ -32,51 +31,33 @@ class GrassField extends AbstractWorldMap {
             y = (int)(Math.random()*sqrt);
             tuftPosition = new Vector2d(x, y);
             if(!isOccupied(tuftPosition)){
-                this.tufts.add(new Grass(tuftPosition));
+                this.tufts.put(tuftPosition, new Grass(tuftPosition));
                 i++;
             }
         }
     }
 
     public boolean isOccupied(Vector2d position) {
-        if(super.isOccupied(position)) {
-            return true;
-        }
-        for( Grass tuft : this.tufts){
-            if(tuft.getPosition().equals(position)){
-                return true;
-            }
-        }
-        return false;
+        return objectAt(position) != null;
     }
 
     public Object objectAt(Vector2d position) {
         if (super.objectAt(position) != null) {
             return super.objectAt(position);
         }
-            for (Grass elem : this.tufts) {
-                if (elem.getPosition().equals(position)) {
-                    return elem;
-            }
-        }
-        return null;
+        return tufts.get(position);
     }
 
     protected Vector2d checkBeginning(){
         int x = Integer.MAX_VALUE;
         int y = Integer.MAX_VALUE;
-        for (Animal animal : this.animals){
-            x = Math.min(animal.getPosition().x, x);
-            y = Math.min(animal.getPosition().y, y);
+        for (Vector2d vector : this.animals.keySet()){
+            x = Math.min(vector.x, x);
+            y = Math.min(vector.y, y);
         }
-        for ( Grass elem : this.tufts){
-            x = Math.min(elem.getPosition().x, x);
-            y = Math.min(elem.getPosition().y, y);
-        }
-
-        for (Animal animal : this.animals){
-            x = Math.min(animal.getPosition().x, x);
-            y = Math.min(animal.getPosition().y, y);
+        for ( Vector2d vector : this.tufts.keySet()){
+            x = Math.min(vector.x, x);
+            y = Math.min(vector.y, y);
         }
         return new Vector2d(x, y);
     }
@@ -84,14 +65,14 @@ class GrassField extends AbstractWorldMap {
      protected Vector2d checkEnding(){
          int x = Integer.MIN_VALUE;
          int y = Integer.MIN_VALUE;
-         for (Animal animal : this.animals){
-             x = Math.max(animal.getPosition().x, x);
-             y = Math.max(animal.getPosition().y, y);
+         for (Vector2d vector : this.animals.keySet()){
+             x = Math.max(vector.x, x);
+             y = Math.max(vector.y, y);
          }
 
-        for ( Grass elem : this.tufts){
-            x = Math.max(elem.getPosition().x, x);
-            y = Math.max(elem.getPosition().y, y);
+        for ( Vector2d vector : this.tufts.keySet()){
+            x = Math.max(vector.x, x);
+            y = Math.max(vector.y, y);
         }
         return new Vector2d(x, y);
     }
