@@ -20,7 +20,7 @@ public class OptionsParser {
                 case "b", "backward" -> directions[index] = MoveDirection.BACKWARD;
                 case "l", "left" -> directions[index] = MoveDirection.LEFT;
                 case "r", "right" -> directions[index] = MoveDirection.RIGHT;
-                default -> index--;
+                default -> throw new IllegalArgumentException(arg + " is not legal move specification");
             }
         }
         return directions;

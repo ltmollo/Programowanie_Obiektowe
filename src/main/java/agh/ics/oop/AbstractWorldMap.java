@@ -2,12 +2,21 @@ package agh.ics.oop;
 
 import java.util.*;
 
-abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
-    Map<Vector2d, Animal> animals = new HashMap<>();
-    protected final Vector2d beginVector;
-    protected final Vector2d endVector;
+public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+    protected Map<Vector2d, Animal> animals = new HashMap<>();
+    public final Vector2d beginVector;
+    public final Vector2d endVector;
     private MapVisualizer toDraw = new MapVisualizer(this);
 
+    protected MapBoundary mapBound = new MapBoundary();
+
+    public Vector2d getLowerLeft(){
+        return mapBound.checkBeginning();
+    }
+
+    public Vector2d getUpperRight(){
+        return mapBound.checkEnding();
+    }
 
     public AbstractWorldMap (int maxWidth, int maxHeight, int minWidth, int minHeight){
         this.beginVector = new Vector2d(minWidth, minHeight);
@@ -37,9 +46,13 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     }
 
     public boolean place(Animal animal) {
-        if(!canMoveTo(animal.getPosition())) {return false;}
+        if(!canMoveTo(animal.getPosition())) {
+            throw new IllegalArgumentException("Pole " + animal.getPosition().toString() + " jest już zajęte.");
+        }
         this.animals.put(animal.getPosition(), animal);
+        mapBound.addElementToMap(animal.getPosition());
         animal.addObserver(this);
+        animal.addObserver(mapBound);
         return true;
     }
 
@@ -52,10 +65,9 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         Animal animal = this.animals.get(oldPosition);
         this.animals.remove(oldPosition);
         this.animals.put(newPosition, animal);
-
     }
 
     public String toString(){
-        return toDraw.draw(checkBeginning(), checkEnding());
+        return toDraw.draw(mapBound.checkBeginning(), mapBound.checkEnding());
     }
 }

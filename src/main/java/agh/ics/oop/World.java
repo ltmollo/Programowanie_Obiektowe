@@ -1,9 +1,10 @@
 package agh.ics.oop;
 
+import agh.ics.oop.gui.App;
+import javafx.application.Application;
+
 import java.util.List;
 import java.util.Scanner;
-
-import static org.testng.AssertJUnit.assertEquals;
 
 public class World {
     public static void main(String[] args) {
@@ -17,18 +18,9 @@ public class World {
         } else {
             arguments = args;
         }
+        Application.launch(App.class, arguments);
 
 
-        MoveDirection[] directions2 = new OptionsParser().parse(arguments);
-        IWorldMap map2 = new GrassField(5);
-        Vector2d[] positions2 = { new Vector2d(2,2), new Vector2d(2, 3)};
-        IEngine engine2 = new SimulationEngine(directions2, map2, positions2);
-        engine2.run();
-
-
-        System.out.println(map2.toString());
-        System.out.println();
-        System.out.println("System zakończył działanie");
-       }
+    }
 }
 

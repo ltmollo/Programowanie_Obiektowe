@@ -2,9 +2,9 @@ package agh.ics.oop;
 
 import java.util.*;
 
-class GrassField extends AbstractWorldMap {
+public class GrassField extends AbstractWorldMap {
     private final int nbOfTuft;
-    private Map<Vector2d, Grass> tufts = new HashMap<>();
+    protected Map<Vector2d, Grass> tufts = new HashMap<>();
 
     public GrassField(int tuft){
         super(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE);
@@ -33,8 +33,10 @@ class GrassField extends AbstractWorldMap {
             if(!isOccupied(tuftPosition)){
                 this.tufts.put(tuftPosition, new Grass(tuftPosition));
                 i++;
+                mapBound.addElementToMap(tuftPosition);
             }
         }
+        this.mapBound.setMapBoundary(this.tufts);
     }
 
     public boolean isOccupied(Vector2d position) {

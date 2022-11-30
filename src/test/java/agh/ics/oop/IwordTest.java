@@ -1,9 +1,10 @@
 package agh.ics.oop;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
 import static org.testng.AssertJUnit.*;
 
 public class IwordTest {
@@ -26,8 +27,19 @@ public class IwordTest {
         engine.run();
         Animal zwierzak = new Animal(map, new Vector2d(2, 2));
         Animal zwierzak1 = new Animal(map, new Vector2d(2, 5));
-        assertFalse(map.place(zwierzak));
+        Assertions.assertThrows(IllegalArgumentException.class, ()->map.place(zwierzak));
         assertTrue(map.place(zwierzak1));
+    }
+
+    @Test
+    public void OptionsParseTest(){
+        String[] args = {"l", "f", "b", "r", "left", "forward", "backward", "right"};
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        MoveDirection[] directions2 = {MoveDirection.LEFT, MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.RIGHT, MoveDirection.LEFT, MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.RIGHT};
+        assertTrue(Arrays.deepEquals(directions, directions2));
+
+        String[] args2 = {"let", "f", "java"};
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> new OptionsParser().parse(args2));
     }
 
     @Test
@@ -41,13 +53,11 @@ public class IwordTest {
     @Test
     public void ObjectAtTest(){
         engine.run();
-
         assertEquals(map.objectAt(new Vector2d(2, 5)),null);
     }
 
     @Test
     public void Movement(){
-        engine.run();
         String[] args2 = {"f", "f", "f"};
         MoveDirection[] directions2 = new OptionsParser().parse(args2);
         IWorldMap map2 = new RectangularMap(10, 5);
@@ -64,7 +74,7 @@ public class IwordTest {
         String[] args3 = {"f", "f", "f", "f"};
         MoveDirection[] directions3 = new OptionsParser().parse(args3);
         IWorldMap map3 = new RectangularMap(10, 5);
-        Vector2d[] positions3 = { new Vector2d(2,2), new Vector2d(2, 3), new Vector2d(2,2)};
+        Vector2d[] positions3 = { new Vector2d(2,2), new Vector2d(2, 3)};
         IEngine engine3 = new SimulationEngine(directions3, map3, positions3);
         engine3.run();
 
@@ -77,7 +87,7 @@ public class IwordTest {
         String[] args4 = {"f", "f", "f", "f", "r", "l", "f", "b"};
         MoveDirection[] directions4 = new OptionsParser().parse(args4);
         IWorldMap map4 = new RectangularMap(10, 5);
-        Vector2d[] positions4 = { new Vector2d(2,2), new Vector2d(2, 3), new Vector2d(2,2)};
+        Vector2d[] positions4 = { new Vector2d(2,2), new Vector2d(2, 3)};
         IEngine engine4 = new SimulationEngine(directions4, map4, positions4);
         engine4.run();
 
