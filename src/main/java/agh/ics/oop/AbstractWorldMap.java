@@ -6,7 +6,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected Map<Vector2d, Animal> animals = new HashMap<>();
     public final Vector2d beginVector;
     public final Vector2d endVector;
-    private MapVisualizer toDraw = new MapVisualizer(this);
+    private final MapVisualizer toDraw = new MapVisualizer(this);
 
     protected MapBoundary mapBound = new MapBoundary();
 
@@ -55,10 +55,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         animal.addObserver(mapBound);
         return true;
     }
-
-    protected abstract  Vector2d checkBeginning();
-
-    protected abstract Vector2d checkEnding();
 
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition){

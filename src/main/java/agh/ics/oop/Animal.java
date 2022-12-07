@@ -64,7 +64,6 @@ public class Animal extends AbstractWorldMapElement{
                     Vector2d oldPosition = this.position;
                     this.position = newPosition;
                     positionChanged(oldPosition, newPosition);
-
                 }
                 break;
         }

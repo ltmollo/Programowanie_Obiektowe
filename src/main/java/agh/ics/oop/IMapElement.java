@@ -5,4 +5,6 @@ public interface IMapElement {
     // return a representation of an object
     Vector2d getPosition();
     // return current postion of an object
+    String getLinkToImage();
+    //get link to image
 }
